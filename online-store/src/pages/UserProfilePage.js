@@ -97,7 +97,7 @@ const UserProfilePage = () => {
         {/* Profile Section */}
         <div className="flex items-center space-x-6">
           <img
-            src={auth.user.profilePicture || "/default-profile.jpg"} // Display user's profile picture or default image
+            src={auth.user.profilePicture || "/IMG_6067.JPG"} // Display user's profile picture or default image
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover shadow-lg"
           />

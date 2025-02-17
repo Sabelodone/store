@@ -103,7 +103,7 @@ const CartPage = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, margin: 'auto', padding: 4 }}>
+    <Box sx={{ maxWidth: '100%', overflow: 'hidden', margin: 'auto', padding: isMobile ? 2 : 4 }}>
       {showConfetti && <Confetti />}
       <Typography variant="h3" component="h1" gutterBottom>
         Your Cart
@@ -142,16 +142,16 @@ const CartPage = () => {
                   <StyledCard>
                     <CardContent>
                       <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={3}>
+                        <Grid item xs={12} sm={3}>
                           <img src={item.image} alt={item.name} style={{ width: '100%', borderRadius: 8 }} />
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={12} sm={5}>
                           <Typography variant="h6">{item.name}</Typography>
                           <Typography variant="body2" color="text.secondary">
                             {formatCurrency(item.price)}
                           </Typography>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={12} sm={2}>
                           <Box display="flex" alignItems="center">
                             <IconButton
                               size="small"
@@ -175,7 +175,7 @@ const CartPage = () => {
                             </IconButton>
                           </Box>
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={12} sm={2}>
                           <Typography variant="subtitle1" align="right">
                             {formatCurrency(item.price * item.quantity)}
                           </Typography>
@@ -224,16 +224,16 @@ const CartPage = () => {
                       <StyledCard>
                         <CardContent>
                           <Grid container spacing={2} alignItems="center">
-                            <Grid item xs={3}>
+                            <Grid item xs={12} sm={3}>
                               <img src={item.image} alt={item.name} style={{ width: '100%', borderRadius: 8 }} />
                             </Grid>
-                            <Grid item xs={7}>
+                            <Grid item xs={12} sm={7}>
                               <Typography variant="h6">{item.name}</Typography>
                               <Typography variant="body2" color="text.secondary">
                                 {formatCurrency(item.price)}
                               </Typography>
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item xs={12} sm={2}>
                               <Box display="flex" justifyContent="flex-end">
                                 <Tooltip title="Move to cart" arrow>
                                   <IconButton
@@ -346,4 +346,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-

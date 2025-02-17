@@ -35,7 +35,7 @@ const HomePage = () => {
           animate={{ scale: 1 }}
           transition={{ duration: 10, repeat: Infinity, repeatType: 'reverse' }}
         >
-          <img src="/Screenshot 2025-01-07 095834.png" alt="" className="w-full h-full object-cover opacity-20" />
+          <img src="/download (3).jpg" alt="" className="w-full h-full object-cover opacity-20" />
         </motion.div>
       </section>
 
