@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline'; // Using heroicons for eye icons
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
+import { toast } from 'react-toastify';
+import { FcGoogle } from 'react-icons/fc'; // Google icon
+import { FaFacebook } from 'react-icons/fa'; // Facebook icon
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, loginWithGoogle, loginWithFacebook } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [loading, setLoading] = useState(false); // State for loading indicator
-  const navigate = useNavigate(); // Use navigate hook to redirect
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Validate email and password
     let valid = true;
     
     if (!email) {
@@ -45,13 +47,37 @@ const LoginPage = () => {
     if (valid) {
       try {
         await login(email, password);
-        navigate('/profile'); // Redirect to profile page after successful login
+        toast.success('Login successful! Redirecting...');
+        navigate('/profile');
       } catch (err) {
         setError('Login failed: ' + err.message);
+        toast.error('Login failed: ' + err.message);
       }
     }
 
     setLoading(false);
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      toast.success('Login with Google successful! Redirecting...');
+      navigate('/profile');
+    } catch (err) {
+      setError('Google login failed: ' + err.message);
+      toast.error('Google login failed: ' + err.message);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      await loginWithFacebook();
+      toast.success('Login with Facebook successful! Redirecting...');
+      navigate('/profile');
+    } catch (err) {
+      setError('Facebook login failed: ' + err.message);
+      toast.error('Facebook login failed: ' + err.message);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -106,7 +132,7 @@ const LoginPage = () => {
           <button
             type="submit"
             className={`w-full py-2 rounded-md text-white focus:outline-none ${loading ? 'bg-gray-400' : 'bg-blue-800 hover:bg-blue-700'}`}
-            disabled={loading} // Disable button while loading
+            disabled={loading}
           >
             {loading ? 'Logging In...' : 'Login'}
           </button>
@@ -120,6 +146,23 @@ const LoginPage = () => {
           <p className="text-sm text-blue-600 mt-2">
             <Link to="/forgot-password">Forgot Password?</Link>
           </p>
+        </div>
+
+        <div className="mt-6 flex justify-center space-x-4">
+          <button
+            onClick={handleGoogleLogin}
+            className="p-2 rounded-full border border-gray-300 hover:bg-gray-100"
+            title="Login with Google"
+          >
+            <FcGoogle className="h-6 w-6" />
+          </button>
+          <button
+            onClick={handleFacebookLogin}
+            className="p-2 rounded-full border border-gray-300 hover:bg-gray-100"
+            title="Login with Facebook"
+          >
+            <FaFacebook className="h-6 w-6 text-blue-600" />
+          </button>
         </div>
       </div>
     </div>

@@ -4,6 +4,15 @@ import Slider from '@mui/material/Slider';
 import {  X, Filter, Grid, List } from 'react-feather';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../contexts/CartContext';
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
+
+const fetchProducts = async () => {
+  const querySnapshot = await getDocs(collection(db, "products"));
+  const products = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  console.log(products);
+};
+
 
 const ProductListingPage = () => {
   const [products, setProducts] = useState([]);

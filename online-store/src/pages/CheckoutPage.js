@@ -29,6 +29,18 @@ import {
   FaCcDinersClub,
   FaCcJcb,
 } from 'react-icons/fa';
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
+
+const placeOrder = async (orderData) => {
+  try {
+    await addDoc(collection(db, "orders"), orderData);
+    console.log("Order placed!");
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),

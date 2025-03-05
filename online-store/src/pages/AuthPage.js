@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // Assuming AuthContext is where login logic resides
+import { useAuth } from '../contexts/AuthContext'; // Import AuthContext
 
 const AuthPage = () => {
-  const { login } = useAuth(); // Accessing the login method from AuthContext
+  const { login } = useAuth(); // Use Firebase login function from AuthContext
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,13 +13,13 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(''); // Reset error message before trying login
+    setError('');
 
     try {
-      await login(email, password); // Call login function from AuthContext
-      navigate('/profile'); // Redirect to profile page after successful login
+      await login(email, password);
+      navigate('/profile'); // Redirect on successful login
     } catch (err) {
-      setError('Login failed: ' + err.message); // Handle login error
+      setError('Login failed: ' + err.message);
     }
 
     setLoading(false);
@@ -30,11 +30,9 @@ const AuthPage = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold text-center text-blue-800">Login</h2>
         
-        {/* Error message handling */}
         {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-          {/* Email input */}
           <div>
             <label htmlFor="email" className="block text-gray-700">Email</label>
             <input
@@ -48,7 +46,6 @@ const AuthPage = () => {
             />
           </div>
 
-          {/* Password input */}
           <div>
             <label htmlFor="password" className="block text-gray-700">Password</label>
             <input
@@ -62,17 +59,15 @@ const AuthPage = () => {
             />
           </div>
 
-          {/* Submit button */}
           <button
             type="submit"
             className={`w-full py-2 rounded-md text-white focus:outline-none ${loading ? 'bg-gray-400' : 'bg-blue-800 hover:bg-blue-700'}`}
-            disabled={loading} // Disable button while loading
+            disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
-        {/* Sign up link */}
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-700">
             Don't have an account?{' '}

@@ -1,13 +1,17 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Importing components
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
+import ProtectedRoute from './components/ProtectedRoute'; // Import ProtectedRoute
 
 // Importing pages
 import HomePage from './pages/HomePage';
@@ -16,15 +20,15 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
-
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import PaymentPage from './pages/PaymentPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 // Importing contexts
 import { CartProvider } from './contexts/CartContext';
 import AuthProvider from './contexts/AuthContext';
-import UserProfilePage from './pages/UserProfilePage'; // Import the UserProfilePage
+
 // Global styles
 import './App.css';
 
@@ -32,16 +36,13 @@ import './App.css';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2', // Customize color
+      main: '#1976d2',
     },
     secondary: {
-      main: '#dc004e', // Customize color
+      main: '#dc004e',
     },
   },
-  // Additional theme customizations can be added here
 });
-
-
 
 function App() {
   return (
@@ -60,16 +61,31 @@ function App() {
                       <Route path="/products" element={<ProductListingPage />} />
                       <Route path="/product/:id" element={<ProductDetailPage />} />
                       <Route path="/cart" element={<CartPage />} />
-                      <Route path="/checkout" element={<CheckoutPage />} />
-                      <Route path="/payment" element={<PaymentPage />} />
-                      <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+
+                      {/* Protected Routes */}
+                      <Route element={<ProtectedRoute />}>
+                        <Route path="/checkout" element={<CheckoutPage />} />
+                        <Route path="/payment" element={<PaymentPage />} />
+                        <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+                        <Route path="/profile" element={<UserProfilePage />} />
+                      </Route>
+
+                      {/* Auth Routes */}
                       <Route path="/auth/login" element={<LoginPage />} />
                       <Route path="/auth/signup" element={<SignupPage />} />
-                      
-                      {/* Profile route */}
-                      <Route path="/profile" element={<UserProfilePage />} />
                     </Routes>
                   </ErrorBoundary>
+                  <ToastContainer
+        position="top-right"
+        autoClose={5000} // Auto-close notifications after 5 seconds
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
                 </main>
                 <Footer />
               </div>
@@ -80,6 +96,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
 
 export default App;
