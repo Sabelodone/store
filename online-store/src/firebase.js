@@ -11,20 +11,20 @@ import {
   signInWithPopup
 } from "firebase/auth";
 
-// Firebase configuration
+// Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyAGbiDKJClIXpIIslVHN84YW4hcY07I0ZE",
-  authDomain: "online-store-a9fc8.firebaseapp.com",
-  projectId: "online-store-a9fc8",
-  storageBucket: "online-store-a9fc8.appspot.com", // Fixed the storageBucket URL
-  messagingSenderId: "317045298356",
-  appId: "1:317045298356:web:7d5f702db40160bba2b3e1",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app); // Initialize Firestore
+const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
